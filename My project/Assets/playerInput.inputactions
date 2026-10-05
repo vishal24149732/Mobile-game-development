@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "playerInput",
+    "maps": [
+        {
+            "name": "player",
+            "id": "8073be87-7a44-47fe-b487-197b15e73890",
+            "actions": [
+                {
+                    "name": "touch",
+                    "type": "Button",
+                    "id": "9b05b900-e6bb-4323-8810-1c3fca2bc5ec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "swipe",
+                    "type": "Value",
+                    "id": "008a19dd-e5c3-4e36-8896-c6808a2617c8",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "42124425-116b-49ac-994e-066dcfaaaeab",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3df4e4f-af33-41b7-86d0-f49679c59e96",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "swipe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

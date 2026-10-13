@@ -1865,6 +1865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::control
   sensitivity: 2
+  cam: {fileID: 330585545}
 --- !u!114 &1909185091
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,9 @@ public class control : MonoBehaviour
     public float sensitivity = 2f;
     private Rigidbody rb;
     private bool roundE = false;
+    public Camera cam;
+    Vector3 pos2;
+    Vector3 rot;
 
     void Start()
     {
@@ -41,29 +44,6 @@ public class control : MonoBehaviour
 
         if (roll > 180f)
             roll -= 360f;
-        //if (gyroR)
-        //{
-
-        //    if (roll > 10f)
-        //    {
-        //        Debug.Log("GYRO RIGHT");
-
-        //        transform.position += Vector3.right * 5f * Time.deltaTime;
-        //        //gyroR = false;
-        //    }
-        //    else if (roll < -10f)
-        //    {
-        //        Debug.Log("GYRO LEFT");
-
-        //        transform.position += Vector3.left * 5f * Time.deltaTime;
-        //        //gyroR = false;
-        //    }
-        //}
-
-        //if (Mathf.Abs(roll) < 5f)
-        //{
-        //    gyroR = true;
-        //}
 
         if (Mathf.Abs(roll) < 2f)
             roll = 0f;
@@ -151,6 +131,10 @@ public class control : MonoBehaviour
         {
             Debug.Log("Touched a round object!");
             roundE = true;
+            pos2.y = 10f;
+            rot.x = 25f;
+            cam.transform.position += pos2;
+            cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
         }
     }
 

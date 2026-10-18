@@ -136,6 +136,12 @@ public class control : MonoBehaviour
             cam.transform.position += pos2;
             cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
         }
+
+        if (collision.gameObject.CompareTag("obs"))
+        {
+            Debug.Log("Hit");
+            Handheld.Vibrate();
+        }
     }
 
     private Quaternion GyroToUnity (Quaternion q)

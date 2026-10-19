@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CandyCoded.HapticFeedback;
+using UnityEngine.SceneManagement;
 
 public class control : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class control : MonoBehaviour
     public Camera cam;
     Vector3 pos2;
     Vector3 rot;
+    GameObject bul;
 
     void Start()
     {
@@ -121,6 +124,8 @@ public class control : MonoBehaviour
         else
         {
             rb.AddForce(Vector3.forward * 1f , ForceMode.Force);
+            
+
         }
 
     }
@@ -133,6 +138,7 @@ public class control : MonoBehaviour
             roundE = true;
             pos2.y = 10f;
             rot.x = 25f;
+            HapticFeedback.MediumFeedback();
             cam.transform.position += pos2;
             cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
         }
@@ -140,7 +146,16 @@ public class control : MonoBehaviour
         if (collision.gameObject.CompareTag("obs"))
         {
             Debug.Log("Hit");
-            Handheld.Vibrate();
+            //Handheld.Vibrate();
+            HapticFeedback.LightFeedback();
+        }
+
+        if (collision.gameObject.CompareTag("finish"))
+        {
+            Debug.Log("Hit");
+            //Handheld.Vibrate();
+            HapticFeedback.HeavyFeedback();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 

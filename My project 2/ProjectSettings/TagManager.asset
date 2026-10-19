@@ -6,6 +6,7 @@ TagManager:
   tags:
   - obs
   - round
+  - finish
   layers:
   - Default
   - TransparentFX

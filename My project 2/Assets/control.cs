@@ -38,7 +38,7 @@ public class control : MonoBehaviour
 
     void Update()
     {
-
+        Vector3 acceleration = Input.acceleration;
         Quaternion currentRotation = GyroToUnity(Input.gyro.attitude);
         Quaternion relativeRotation = Quaternion.Inverse(initialRotation) * currentRotation;
 
@@ -55,11 +55,13 @@ public class control : MonoBehaviour
         smoothTilt = Mathf.Lerp(smoothTilt, roll / 20f, Time.deltaTime * 5f);
 
         // Move the ball
-        transform.position += Vector3.left * smoothTilt * sensitivity * Time.deltaTime;
+        //transform.position += Vector3.left * smoothTilt * sensitivity * Time.deltaTime;
+
+        transform.position += Vector3.left * acceleration.x * sensitivity * Time.deltaTime;
 
         //pos.y = -0.01f;
         //transform.position += pos;
-        
+
         if (Input.touchCount == 1) // user is touching the screen with a single touch
         {
             Touch touch = Input.GetTouch(0); // get the touch
@@ -155,6 +157,10 @@ public class control : MonoBehaviour
             Debug.Log("Hit");
             //Handheld.Vibrate();
             HapticFeedback.HeavyFeedback();
+            ScoreManager.score++;
+
+            PlayerPrefs.SetInt("PlayerScore", ScoreManager.score);
+            PlayerPrefs.Save();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

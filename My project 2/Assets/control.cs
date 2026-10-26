@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using CandyCoded.HapticFeedback;
 using UnityEngine.SceneManagement;
+using UnityEditor.Build.Content;
 
 public class control : MonoBehaviour
 {
@@ -18,10 +19,17 @@ public class control : MonoBehaviour
     public float sensitivity = 2f;
     private Rigidbody rb;
     private bool roundE = false;
+    private bool roundS = false;
     public Camera cam;
     Vector3 pos2;
     Vector3 rot;
     GameObject bul;
+    bool animationn = false;
+    private Animator animator;
+    public bool animfinish = false;
+    private bool isFinished = false;
+    Vector3 pos3;
+    Vector3 pos4;
 
     void Start()
     {
@@ -34,6 +42,7 @@ public class control : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                          RigidbodyConstraints.FreezeRotationY |
                          RigidbodyConstraints.FreezeRotationZ;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -55,9 +64,9 @@ public class control : MonoBehaviour
         smoothTilt = Mathf.Lerp(smoothTilt, roll / 20f, Time.deltaTime * 5f);
 
         // Move the ball
-        //transform.position += Vector3.left * smoothTilt * sensitivity * Time.deltaTime;
+        transform.position += Vector3.left * smoothTilt * sensitivity * Time.deltaTime;
 
-        transform.position += Vector3.left * acceleration.x * sensitivity * Time.deltaTime;
+        //transform.position += Vector3.left * acceleration.x * sensitivity * Time.deltaTime;
 
         //pos.y = -0.01f;
         //transform.position += pos;
@@ -123,11 +132,9 @@ public class control : MonoBehaviour
         {
             rb.AddForce(Vector3.down * 1f, ForceMode.Force);
         } 
-        else
+        if (roundS) 
         {
             rb.AddForce(Vector3.forward * 1f , ForceMode.Force);
-            
-
         }
 
     }
@@ -137,12 +144,25 @@ public class control : MonoBehaviour
         if (collision.gameObject.CompareTag("round"))
         {
             Debug.Log("Touched a round object!");
-            roundE = true;
+            
             pos2.y = 10f;
             rot.x = 25f;
             HapticFeedback.MediumFeedback();
-            cam.transform.position += pos2;
-            cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
+            roundE = true;
+           
+            if (!animationn)
+            {
+                pos3.y = 5;
+                transform.position += pos3;
+                animator.SetTrigger("Roll");
+                animationn = true;
+            }
+            if (animfinish)
+            {
+                roundE = true;
+                cam.transform.position += pos2;
+                cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
+            }
         }
 
         if (collision.gameObject.CompareTag("obs"))
@@ -150,6 +170,7 @@ public class control : MonoBehaviour
             Debug.Log("Hit");
             //Handheld.Vibrate();
             HapticFeedback.LightFeedback();
+            
         }
 
         if (collision.gameObject.CompareTag("finish"))
@@ -168,6 +189,22 @@ public class control : MonoBehaviour
     private Quaternion GyroToUnity (Quaternion q)
     {
         return new Quaternion(q.x, q.y, -q.z, -q.w);
+    }
+
+    public void AnimFinish ()
+    {
+        Debug.Log("Actttt ");
+        animfinish = true;
+        
+        roundS = true;
+        cam.transform.position += pos2;
+        cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
+    }
+
+    public void Ground ()
+    {
+        pos4.y = -4;
+        transform.position += pos4;
     }
 }
 //public float mag = 1f;

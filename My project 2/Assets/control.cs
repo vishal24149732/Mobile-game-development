@@ -30,6 +30,7 @@ public class control : MonoBehaviour
     private bool isFinished = false;
     Vector3 pos3;
     Vector3 pos4;
+    public Enemy enemy;
 
     void Start()
     {
@@ -130,9 +131,10 @@ public class control : MonoBehaviour
 
         if (!roundE)
         {
-            rb.AddForce(Vector3.down * 1f, ForceMode.Force);
+            //rb.AddForce(Vector3.down * 1f);
+            rb.linearVelocity = Vector3.down * 50f;
         } 
-        if (roundS) 
+        if (roundE) 
         {
             rb.AddForce(Vector3.forward * 1f , ForceMode.Force);
         }
@@ -141,29 +143,29 @@ public class control : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("round"))
-        {
-            Debug.Log("Touched a round object!");
+        //if (collision.gameObject.CompareTag("round"))
+        //{
+        //    Debug.Log("Touched a round object!");
             
-            pos2.y = 10f;
-            rot.x = 25f;
-            HapticFeedback.MediumFeedback();
-            roundE = true;
+        //    //pos2.y = 10f;
+        //    //rot.x = 25f;
+        //    HapticFeedback.MediumFeedback();
+        //    //roundE = true;
            
-            if (!animationn)
-            {
-                pos3.y = 5;
-                transform.position += pos3;
-                animator.SetTrigger("Roll");
-                animationn = true;
-            }
-            if (animfinish)
-            {
-                roundE = true;
-                cam.transform.position += pos2;
-                cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
-            }
-        }
+        //    if (!animationn)
+        //    {
+        //        //pos3.y = 5;
+        //        //transform.position += pos3;
+        //        animator.SetTrigger("Roll");
+        //        animationn = true;
+        //    }
+        //    if (animfinish)
+        //    {
+        //        roundE = true;
+        //        //cam.transform.position += pos2;
+        //        //cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
+        //    }
+        //}
 
         if (collision.gameObject.CompareTag("obs"))
         {
@@ -186,6 +188,34 @@ public class control : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter (Collider other)
+    {
+        if (other.CompareTag("round"))
+        {
+            Debug.Log("Touched a round object!");
+
+            pos2.y = 10f;
+            rot.x = 25f;
+            HapticFeedback.MediumFeedback();
+            //roundE = true;
+
+            if (!animationn)
+            {
+                //pos3.y = 5;
+                //transform.position += pos3;
+                animator.SetTrigger("Roll");
+                animationn = true;
+            }
+            if (animfinish)
+            {
+                roundE = true;
+                //cam.transform.position += pos2;
+                //cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
+            }
+         
+        }
+    }
+
     private Quaternion GyroToUnity (Quaternion q)
     {
         return new Quaternion(q.x, q.y, -q.z, -q.w);
@@ -196,9 +226,10 @@ public class control : MonoBehaviour
         Debug.Log("Actttt ");
         animfinish = true;
         
-        roundS = true;
+        roundE = true;
         cam.transform.position += pos2;
         cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
+        enemy.StartMoving();
     }
 
     public void Ground ()

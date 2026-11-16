@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
         {
             rb.linearVelocity = Vector3.back * 20f ;
             //rb.AddForce(Vector3.back * 10f, ForceMode.Force);
+
+
         }
     }
 }

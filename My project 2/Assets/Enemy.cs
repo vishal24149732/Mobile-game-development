@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class Enemy : MonoBehaviour
 {
@@ -20,6 +21,14 @@ public class Enemy : MonoBehaviour
             //rb.AddForce(Vector3.back * 10f, ForceMode.Force);
 
 
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("bullet"))
+        {
+            Destroy(gameObject);
         }
     }
 }

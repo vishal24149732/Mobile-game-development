@@ -30,6 +30,10 @@ public class control : MonoBehaviour
     private bool isFinished = false;
     Vector3 pos3;
     Vector3 pos4;
+    public GameObject gun;
+    public GameObject Espawn;
+    public GameObject Espawn2;
+    public GameObject Espawn3;
     public Enemy enemy;
 
     void Start()
@@ -46,7 +50,7 @@ public class control : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 acceleration = Input.acceleration;
         Quaternion currentRotation = GyroToUnity(Input.gyro.attitude);
@@ -136,7 +140,7 @@ public class control : MonoBehaviour
         } 
         if (roundE) 
         {
-            rb.AddForce(Vector3.forward * 1f , ForceMode.Force);
+            rb.AddForce(Vector3.forward * 10f , ForceMode.Force);
         }
 
     }
@@ -209,10 +213,24 @@ public class control : MonoBehaviour
             if (animfinish)
             {
                 roundE = true;
+                Shoot();
                 //cam.transform.position += pos2;
                 //cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
             }
          
+        }
+
+        if (other.CompareTag("Spawner"))
+        {
+            Espawn.SetActive(false);
+        }
+        if (other.CompareTag("Spawner2"))
+        {
+            Espawn2.SetActive(false);
+        }
+        if (other.CompareTag("Spawner3"))
+        {
+            Espawn3.SetActive(false);
         }
     }
 
@@ -229,7 +247,11 @@ public class control : MonoBehaviour
         roundE = true;
         cam.transform.position += pos2;
         cam.transform.rotation = Quaternion.Euler(25f, 0f, 0f);
-        enemy.StartMoving();
+        //enemy.StartMoving();
+        Espawn.SetActive(true);
+        Espawn2.SetActive(true);
+        Espawn3.SetActive(true);
+        Shoot();
     }
 
     public void Ground ()
@@ -237,6 +259,13 @@ public class control : MonoBehaviour
         pos4.y = -4;
         transform.position += pos4;
     }
+
+    public void Shoot()
+    {
+        gun.SetActive(true);
+    }
+
+   
 }
 //public float mag = 1f;
 //private Vector2 dir;

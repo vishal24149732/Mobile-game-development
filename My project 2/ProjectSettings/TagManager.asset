@@ -7,6 +7,10 @@ TagManager:
   - obs
   - round
   - finish
+  - bullet
+  - Spawner
+  - Spawner2
+  - Spawner3
   layers:
   - Default
   - TransparentFX
